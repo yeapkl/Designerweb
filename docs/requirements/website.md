@@ -40,6 +40,11 @@ moving ticker and gentle scroll-in animation.
 | FR-8 | Mobile menu opens/closes, closes on link click and Escape, returns focus |
 | FR-9 | Enquiry form validates name and message and shows an accessible error |
 | FR-10 | Valid enquiry opens WhatsApp to the studio number with the message pre-filled; nothing is sent to or stored by the website |
+| FR-11 | The site is available in **English (`/`), Bahasa Melayu (`/ms/`) and Mandarin/Simplified Chinese (`/zh/`)**. Each page is fully translated, has the correct `lang`, and never shows untranslated template keys |
+| FR-12 | Every page has a language switcher (EN · BM · 中文) marking the current language, plus `hreflang` alternates (incl. `x-default`) for search engines |
+| FR-13 | Form errors and the pre-filled WhatsApp message use the visitor's page language |
+| FR-14 | **Case studies** section: a featured project with a before/after slider (mouse, touch and keyboard), plus two more case studies. Each shows facts (space, scope, timeline) and brief → what we did → result, followed by a "what every client gets" promise and a CTA |
+| FR-15 | **Our story** section: the founding story in three chapters, a closing quote and the studio's values |
 
 ## Non-functional requirements
 
@@ -55,4 +60,5 @@ moving ticker and gentle scroll-in animation.
 | NFR-S4 | Enquiry input is length-limited, stripped of control characters and URL-encoded; cannot inject parameters or HTML |
 | NFR-S5 | Only GET/HEAD accepted; hidden files, source/config files, traversal paths and directory listings are never served |
 | NFR-S6 | Container runs as non-root; image has no fixable HIGH/CRITICAL CVEs (CI gate) |
+| NFR-I1 | Translations are built into static pages at build time; the build fails if any language is missing or has extra strings, and escapes all text unless a key is explicitly `_html` (limited to `<em>/<strong>/<br>`) |
 | NFR-D1 | Deploys to Cloud Run via GitHub Actions + Workload Identity Federation (no service-account keys), matching `ai-assisted-api` |

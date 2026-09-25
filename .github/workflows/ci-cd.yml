@@ -30,7 +30,8 @@ jobs:
       - name: Install test tooling
         run: npm ci
 
-      - name: Validate HTML
+      - name: Build language pages & validate HTML
+        # Fails if any language is missing a string (see scripts/build.mjs).
         run: npm run lint:html
 
       - name: Audit test dependencies
@@ -121,6 +122,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # Optional repo variable, e.g. https://www.imili.my, for absolute
+          # canonical/hreflang links and sitemap.xml.
+          build-args: |
+            SITE_URL=${{ vars.SITE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -175,6 +180,8 @@ jobs:
           URL="${{ steps.deploy.outputs.url }}"
           curl -sf "$URL/healthz" | grep -q ok
           curl -sfI "$URL/" | tee /dev/stderr | grep -qi "content-security-policy"
+          curl -sf "$URL/ms/" | grep -q 'lang="ms"'
+          curl -sf "$URL/zh/" | grep -q 'lang="zh-Hans"'
 
       # Re-run the security suite against the live HTTPS deployment, so
       # headers/TLS are verified where visitors actually hit them.

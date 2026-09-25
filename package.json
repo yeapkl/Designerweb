@@ -4,7 +4,8 @@
   "private": true,
   "description": "Imili Design Studio website — static site served by nginx on Cloud Run.",
   "scripts": {
-    "lint:html": "html-validate \"site/**/*.html\"",
+    "build": "node scripts/build.mjs",
+    "lint:html": "npm run build && html-validate \"dist/**/*.html\"",
     "test": "playwright test",
     "test:qa": "playwright test tests/qa.spec.js",
     "test:security": "playwright test tests/security.spec.js"

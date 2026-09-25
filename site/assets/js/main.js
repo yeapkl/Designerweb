@@ -78,12 +78,34 @@
     });
   }
 
+  // --- Before / after comparison -------------------------------------------
+  // The range input sits invisibly over the images, so mouse, touch and
+  // keyboard (arrow keys) all work natively. CSSOM custom properties are
+  // allowed under our CSP (only inline style attributes are blocked).
+  document.querySelectorAll("[data-compare]").forEach(function (el) {
+    var range = el.querySelector("[data-compare-range]");
+    if (!range) return;
+    function update() {
+      var v = Math.min(100, Math.max(0, Number(range.value) || 0));
+      el.style.setProperty("--pos", v + "%");
+    }
+    range.addEventListener("input", update);
+    update();
+  });
+
   // --- WhatsApp enquiry ----------------------------------------------------
   // Builds a pre-filled wa.me link on the visitor's own device. No data is
   // sent to or stored by this website.
   var form = document.querySelector("[data-enquiry]");
   if (form) {
     var errorEl = form.querySelector("[data-form-error]");
+    // Localised strings come from data attributes rendered per language.
+    var msg = {
+      errName: form.getAttribute("data-err-name") || "Please tell us your name.",
+      errMessage: form.getAttribute("data-err-message") || "Please add a few words about your project.",
+      greeting: form.getAttribute("data-wa-greeting") || "Hi Imili Design Studio! I'm",
+      space: form.getAttribute("data-wa-space") || "Space"
+    };
 
     function clean(value, max) {
       // Strip control characters (keep newlines), collapse whitespace runs,
@@ -117,11 +139,11 @@
       var type = clean(typeField.value, 40);
       var message = clean(msgField.value, MAX_MESSAGE);
 
-      if (!name) return showError(nameField, "Please tell us your name.");
-      if (message.length < 5) return showError(msgField, "Please add a few words about your project.");
+      if (!name) return showError(nameField, msg.errName);
+      if (message.length < 3) return showError(msgField, msg.errMessage);
 
-      var text = "Hi Imili Design Studio! I'm " + name + ".\n" +
-        "Space: " + type + "\n\n" + message;
+      var text = msg.greeting + " " + name + "\n" +
+        msg.space + ": " + type + "\n\n" + message;
       var url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
 
       // window.open(..., "noopener") always returns null, so it can't tell us

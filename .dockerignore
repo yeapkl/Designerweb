@@ -8,3 +8,4 @@ playwright-report/
 docs/
 *.md
 .env*
+dist/

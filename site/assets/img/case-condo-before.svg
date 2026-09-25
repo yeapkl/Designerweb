@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <rect width="640" height="480" fill="#b9b6ae"/>
+  <!-- partition wall that boxes the room in -->
+  <rect x="440" y="0" width="200" height="360" fill="#a7a39a"/>
+  <rect x="470" y="120" width="60" height="240" fill="#8f8a80"/>
+  <circle cx="518" cy="245" r="4" fill="#5f5a52"/>
+  <!-- small window with blinds -->
+  <rect x="70" y="70" width="140" height="120" fill="#9aa3a6"/>
+  <path d="M70 84h140M70 98h140M70 112h140M70 126h140M70 140h140M70 154h140M70 168h140M70 182h140" stroke="#7d8588" stroke-width="6"/>
+  <!-- bare bulb -->
+  <rect x="319" y="0" width="2" height="70" fill="#3a3834"/>
+  <circle cx="320" cy="80" r="11" fill="#e8e3c8"/>
+  <!-- floor -->
+  <rect y="360" width="640" height="120" fill="#8f8474"/>
+  <!-- old sofa -->
+  <rect x="160" y="270" width="250" height="100" rx="14" fill="#6d5f52"/>
+  <rect x="160" y="240" width="250" height="60" rx="12" fill="#7b6c5e"/>
+  <rect x="150" y="265" width="30" height="100" rx="8" fill="#5f5247"/>
+  <rect x="392" y="265" width="30" height="100" rx="8" fill="#5f5247"/>
+  <!-- clutter: boxes, toys, laundry -->
+  <rect x="40" y="320" width="80" height="60" fill="#a08566"/>
+  <rect x="56" y="280" width="56" height="42" fill="#b39a79"/>
+  <path d="M40 336h80M56 296h56" stroke="#8a7055" stroke-width="3"/>
+  <rect x="460" y="380" width="70" height="50" fill="#a08566"/>
+  <circle cx="300" cy="420" r="14" fill="#b86a5a"/>
+  <rect x="340" y="410" width="30" height="20" rx="4" fill="#6e8aa0"/>
+  <path d="M230 400l40 10-10 20-36-8z" fill="#7f8f99"/>
+  <rect x="560" y="300" width="50" height="70" rx="4" fill="#77706a"/>
+  <path d="M566 300c4-20 34-20 38 0" stroke="#5f5a52" stroke-width="4" fill="none"/>
+</svg>

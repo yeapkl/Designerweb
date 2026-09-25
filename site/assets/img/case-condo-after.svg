@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+  <rect width="640" height="480" fill="#eef1e8"/>
+  <!-- wall opened up: dining visible through -->
+  <rect x="470" y="0" width="170" height="360" fill="#f6f2ea"/>
+  <ellipse cx="560" cy="300" rx="56" ry="10" fill="#b88a64"/>
+  <rect x="556" y="300" width="8" height="60" fill="#1f2420"/>
+  <rect x="557" y="0" width="2" height="150" fill="#1f2420"/>
+  <path d="M530 180a28 28 0 0 1 56 0z" fill="#f4df9c"/>
+  <!-- bigger window, blinds replaced with sheer curtain -->
+  <rect x="60" y="50" width="200" height="170" rx="6" fill="#fffdf9"/>
+  <rect x="70" y="60" width="180" height="150" rx="4" fill="#d6e6ee"/>
+  <circle cx="210" cy="100" r="20" fill="#f4df9c"/>
+  <path d="M70 180c40-24 80-24 120-8s44 10 60 0v38H70z" fill="#b9cfb4"/>
+  <path d="M60 50c14 60 10 120 0 170h26c-8-50-6-110 0-170z" fill="#fffdf9" opacity=".9"/>
+  <!-- pendant cluster + wall light -->
+  <rect x="339" y="0" width="2" height="70" fill="#1f2420"/>
+  <path d="M312 96a28 28 0 0 1 56 0z" fill="#f4df9c"/>
+  <circle cx="440" cy="190" r="12" fill="#f4df9c"/>
+  <rect x="436" y="200" width="8" height="16" fill="#1f2420"/>
+  <!-- floor -->
+  <rect y="360" width="640" height="120" fill="#ead9c2"/>
+  <ellipse cx="300" cy="420" rx="200" ry="36" fill="#f3cdbb"/>
+  <!-- built-in storage bench under window -->
+  <rect x="40" y="300" width="250" height="70" rx="10" fill="#d9b88f"/>
+  <path d="M123 305v60M206 305v60" stroke="#c49f74" stroke-width="3"/>
+  <circle cx="110" cy="336" r="4" fill="#1f2420"/><circle cx="193" cy="336" r="4" fill="#1f2420"/><circle cx="276" cy="336" r="4" fill="#1f2420"/>
+  <rect x="50" y="280" width="230" height="24" rx="12" fill="#fffdf9"/>
+  <rect x="70" y="258" width="50" height="30" rx="12" fill="#a9bea5"/>
+  <!-- sage sofa -->
+  <rect x="300" y="276" width="170" height="90" rx="26" fill="#6f8f73"/>
+  <rect x="312" y="250" width="146" height="60" rx="22" fill="#86a58a"/>
+  <rect x="330" y="266" width="44" height="34" rx="12" fill="#f4df9c"/>
+  <rect x="316" y="366" width="8" height="18" fill="#1f2420"/>
+  <rect x="446" y="366" width="8" height="18" fill="#1f2420"/>
+  <!-- plant + toy basket -->
+  <path d="M590 440h40l-6-50h-28z" fill="#c9714f"/>
+  <path d="M610 390c-24-30-30-70-8-110 16 40 20 76 8 110zM610 390c8-36 30-62 42-70 4 34-14 58-42 70z" fill="#3f5e47"/>
+  <path d="M490 440h70l-8-44h-54z" fill="#e3c69a"/>
+  <path d="M496 410h58" stroke="#cfae7e" stroke-width="3"/>
+</svg>

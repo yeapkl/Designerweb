@@ -31,13 +31,15 @@ test.describe("Page basics", () => {
 
   test("FR-2 every section in the brief is present", async ({ page }) => {
     await page.goto("/");
-    for (const id of ["top", "work", "services", "process", "about", "faq", "contact"]) {
+    for (const id of ["top", "work", "cases", "services", "process", "story", "faq", "contact"]) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
     await expect(page.locator("#work .project")).toHaveCount(6);
     await expect(page.locator("#services .service")).toHaveCount(4);
     await expect(page.locator("#process .step")).toHaveCount(4);
-    await expect(page.locator("#faq details")).toHaveCount(4);
+    await expect(page.locator("#faq details")).toHaveCount(5);
+    await expect(page.locator("#cases .case")).toHaveCount(3);
+    await expect(page.locator("#story .chapter")).toHaveCount(3);
   });
 
   test("FR-3 every in-page nav link points at an element that exists", async ({ page }) => {
@@ -178,7 +180,7 @@ test.describe("WhatsApp enquiry form", () => {
     const url = new URL(popup.url());
     expect(url.origin + url.pathname).toBe(`https://wa.me/${PHONE}`);
     const text = url.searchParams.get("text") || "";
-    expect(text).toContain("I'm Mei Ling.");
+    expect(text).toContain("Hi Imili Design Studio! I'm Mei Ling\n");
     expect(text).toContain("Space: Landed home");
     expect(text).toContain("terrace & want light wood + sage.");
     // The original page stays put.
@@ -206,7 +208,7 @@ test.describe("WhatsApp enquiry form", () => {
     expect(url.hash).toBe("");
     const text = url.searchParams.get("text") || "";
     expect(text).not.toMatch(/[\u0000-\u0009\u000B-\u001F]/);
-    const name = text.match(/I'm (.*)\.\n/)?.[1] || "";
+    const name = text.match(/I'm (.*)\n/)?.[1] || "";
     expect(name.length).toBeLessThanOrEqual(60);
     expect(text.split("\n\n")[1].length).toBeLessThanOrEqual(500);
     // The page itself never rendered the payload as HTML.

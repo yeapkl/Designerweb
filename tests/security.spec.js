@@ -42,7 +42,7 @@ const REQUIRED_HEADERS = {
 };
 
 test.describe("Security headers", () => {
-  for (const path of ["/", "/assets/css/style.css", "/assets/js/main.js", "/assets/img/hero-living.svg", "/does-not-exist", "/healthz"]) {
+  for (const path of ["/", "/ms/", "/zh/", "/assets/css/style.css", "/assets/js/main.js", "/assets/img/hero-living.svg", "/does-not-exist", "/healthz"]) {
     test(`SEC-1 hardened headers on ${path}`, async () => {
       const res = await raw("GET", path);
       for (const [name, pattern] of Object.entries(REQUIRED_HEADERS)) {
@@ -84,6 +84,7 @@ test.describe("Attack surface", () => {
     "/../../../../etc/passwd", "/..%2f..%2f..%2fetc%2fpasswd", "/%2e%2e/%2e%2e/etc/passwd",
     "/assets/../../../etc/passwd", "/etc/nginx/nginx.conf", "/Dockerfile", "/package.json",
     "/nginx/default.conf", "/tests/security.spec.js",
+    "/src/index.html", "/src/i18n/en.json", "/scripts/build.mjs",
   ]) {
     test(`SEC-5 sensitive / traversal path not served: ${path}`, async () => {
       const res = await raw("GET", path);
@@ -133,15 +134,18 @@ test.describe("Client-side", () => {
     expect(foreign).toEqual([]);
   });
 
-  test("SEC-11 no executable inline script, inline handlers or inline styles", async ({ page }) => {
-    await page.goto("/");
-    const inline = await page.evaluate(() => ({
-      scripts: [...document.scripts].filter((s) => !s.src && s.type !== "application/ld+json").length,
-      handlers: [...document.querySelectorAll("*")].filter((el) => [...el.attributes].some((a) => a.name.startsWith("on"))).length,
-      styles: document.querySelectorAll("[style], style").length,
-    }));
-    expect(inline).toEqual({ scripts: 0, handlers: 0, styles: 0 });
-  });
+  for (const path of ["/", "/ms/", "/zh/", "/404.html"]) {
+    test(`SEC-11 ${path} ships no executable inline script, inline handlers or inline styles`, async () => {
+      // Checks the HTML as served. (JS may later set CSSOM custom properties,
+      // e.g. the slider's --pos, which CSP permits and is not injection.)
+      const { body } = await raw("GET", path);
+      const inlineScripts = [...body.matchAll(/<script\b(?![^>]*\bsrc=)([^>]*)>/gi)]
+        .filter((m) => !/type="application\/ld\+json"/.test(m[1]));
+      expect(inlineScripts.length).toBe(0);
+      expect(body).not.toMatch(/\son[a-z]+\s*=/i);
+      expect(body).not.toMatch(/\sstyle\s*=|<style\b/i);
+    });
+  }
 
   test("SEC-12 CSP blocks an injected inline script at runtime", async ({ page }) => {
     const violations = [];

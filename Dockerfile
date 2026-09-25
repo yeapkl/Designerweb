@@ -1,5 +1,17 @@
 # syntax=docker/dockerfile:1
-# Static site served by nginx as a non-root user on port 8080 (Cloud Run).
+
+# ---- Build stage: render one page per language into dist/ ----
+FROM node:22-alpine AS build
+WORKDIR /app
+# Optional: the public site URL (e.g. https://www.imili.my) for absolute
+# canonical/hreflang links and sitemap.xml. Safe to leave empty.
+ARG SITE_URL=""
+COPY scripts ./scripts
+COPY src ./src
+COPY site ./site
+RUN SITE_URL="$SITE_URL" node scripts/build.mjs
+
+# ---- Runtime stage: static files served by nginx, non-root, port 8080 ----
 FROM nginxinc/nginx-unprivileged:1.30-alpine
 
 # Drop the image's default server block and templates; only ours is served.
@@ -11,7 +23,7 @@ RUN apk upgrade --no-cache \
     && mkdir -p /etc/nginx/snippets
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY nginx/security-headers.conf /etc/nginx/snippets/security-headers.conf
-COPY --chown=root:root --chmod=a=rX site/ /usr/share/nginx/html/
+COPY --from=build --chown=root:root --chmod=a=rX /app/dist/ /usr/share/nginx/html/
 USER 101
 
 EXPOSE 8080

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="{{meta.html_lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{meta.title}}</title>
+  <meta name="description" content="{{meta.description}}">
+  <meta name="theme-color" content="#F6F2EA">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="{{meta.og_locale}}">
+  <meta property="og:title" content="{{meta.title}}">
+  <meta property="og:description" content="{{meta.og_description}}">
+  <!-- @alternates -->
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="/assets/js/main.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Imili Design Studio",
+    "description": "{{meta.og_description}}",
+    "telephone": "+60143223601",
+    "availableLanguage": ["English", "Malay", "Chinese"],
+    "sameAs": [
+      "https://www.instagram.com/imilidesignstudio/",
+      "https://xhslink.cn/m/60CBuLx36rZ"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">{{a11y.skip}}</a>
+
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="{{a11y.logo}}">imili<span class="logo-dot">.</span></a>
+      <div class="header-tools">
+        <nav class="lang-switch" aria-label="{{a11y.language}}">
+          <a href="/" hreflang="en" lang="en" data-lang-link="en">EN</a>
+          <a href="/ms/" hreflang="ms" lang="ms" data-lang-link="ms">BM</a>
+          <a href="/zh/" hreflang="zh-Hans" lang="zh-Hans" data-lang-link="zh">中文</a>
+        </nav>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span class="sr-only">{{a11y.menu}}</span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" class="site-nav" aria-label="{{a11y.main_nav}}" data-nav>
+        <ul>
+          <li><a href="#work">{{nav.work}}</a></li>
+          <li><a href="#cases">{{nav.cases}}</a></li>
+          <li><a href="#services">{{nav.services}}</a></li>
+          <li><a href="#story">{{nav.story}}</a></li>
+          <li><a class="btn btn-small" href="#contact">{{nav.cta}}</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">{{hero.eyebrow}}</p>
+          <h1 class="hero-title reveal">{{hero.title_html}}</h1>
+          <p class="hero-lede reveal">{{hero.lede}}</p>
+          <div class="hero-actions reveal">
+            <a class="btn" href="#contact">{{hero.cta_primary}}</a>
+            <a class="btn btn-ghost" href="#cases">{{hero.cta_secondary}} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="hero-art reveal">
+          <img class="hero-img" src="/assets/img/hero-living.svg" width="560" height="640" alt="{{hero.img_alt}}">
+          <div class="hero-badge" aria-hidden="true">
+            <span>{{hero.badge_1}}</span><span>·</span><span>{{hero.badge_2}}</span><span>·</span><span>{{hero.badge_3}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ticker -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>{{ticker.a}}</span><span>✺</span><span>{{ticker.b}}</span><span>✺</span><span>{{ticker.c}}</span><span>✺</span><span>{{ticker.d}}</span><span>✺</span><span>{{ticker.e}}</span><span>✺</span><span>{{ticker.f}}</span><span>✺</span>
+        <span>{{ticker.a}}</span><span>✺</span><span>{{ticker.b}}</span><span>✺</span><span>{{ticker.c}}</span><span>✺</span><span>{{ticker.d}}</span><span>✺</span><span>{{ticker.e}}</span><span>✺</span><span>{{ticker.f}}</span><span>✺</span>
+      </div>
+    </div>
+
+    <!-- Work -->
+    <section class="section" id="work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{{work.eyebrow}}</p>
+            <h2 id="work-title" class="section-title reveal">{{work.title}}</h2>
+          </div>
+          <div class="filters" role="group" aria-label="{{work.filter_label}}" data-filters>
+            <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">{{work.filter_all}}</button>
+            <button type="button" class="chip" data-filter="home" aria-pressed="false">{{work.filter_home}}</button>
+            <button type="button" class="chip" data-filter="commercial" aria-pressed="false">{{work.filter_commercial}}</button>
+          </div>
+        </div>
+
+        <ul class="project-grid" data-projects>
+          <li class="project reveal" data-category="home">
+            <figure>
+              <div class="project-media tint-sage"><img src="/assets/img/project-living.svg" width="480" height="600" loading="lazy" alt="{{work.p1_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p1_name}}</span><span class="project-meta">{{work.p1_meta}}</span></figcaption>
+            </figure>
+          </li>
+          <li class="project reveal" data-category="home">
+            <figure>
+              <div class="project-media tint-blush"><img src="/assets/img/project-bedroom.svg" width="480" height="600" loading="lazy" alt="{{work.p2_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p2_name}}</span><span class="project-meta">{{work.p2_meta}}</span></figcaption>
+            </figure>
+          </li>
+          <li class="project reveal" data-category="home">
+            <figure>
+              <div class="project-media tint-butter"><img src="/assets/img/project-kitchen.svg" width="480" height="600" loading="lazy" alt="{{work.p3_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p3_name}}</span><span class="project-meta">{{work.p3_meta}}</span></figcaption>
+            </figure>
+          </li>
+          <li class="project reveal" data-category="commercial">
+            <figure>
+              <div class="project-media tint-sky"><img src="/assets/img/project-cafe.svg" width="480" height="600" loading="lazy" alt="{{work.p4_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p4_name}}</span><span class="project-meta">{{work.p4_meta}}</span></figcaption>
+            </figure>
+          </li>
+          <li class="project reveal" data-category="home">
+            <figure>
+              <div class="project-media tint-clay"><img src="/assets/img/project-study.svg" width="480" height="600" loading="lazy" alt="{{work.p5_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p5_name}}</span><span class="project-meta">{{work.p5_meta}}</span></figcaption>
+            </figure>
+          </li>
+          <li class="project reveal" data-category="commercial">
+            <figure>
+              <div class="project-media tint-sage"><img src="/assets/img/project-studio.svg" width="480" height="600" loading="lazy" alt="{{work.p6_alt}}"></div>
+              <figcaption><span class="project-name">{{work.p6_name}}</span><span class="project-meta">{{work.p6_meta}}</span></figcaption>
+            </figure>
+          </li>
+        </ul>
+        <p class="work-more">{{work.more_before}} <a href="https://www.instagram.com/imilidesignstudio/" target="_blank" rel="noopener noreferrer">Instagram</a> {{work.more_and}} <a href="https://xhslink.cn/m/60CBuLx36rZ" target="_blank" rel="noopener noreferrer">{{work.more_xhs}}</a>{{work.more_after}}</p>
+      </div>
+    </section>
+
+    <!-- Case studies -->
+    <section class="section section-tinted" id="cases" aria-labelledby="cases-title">
+      <div class="container">
+        <p class="eyebrow">{{cases.eyebrow}}</p>
+        <h2 id="cases-title" class="section-title reveal">{{cases.title}}</h2>
+        <p class="section-lede reveal">{{cases.lede}}</p>
+
+        <article class="case case-featured reveal" aria-labelledby="case1-title">
+          <div class="compare" data-compare>
+            <img class="compare-after" src="/assets/img/case-condo-after.svg" width="640" height="480" loading="lazy" alt="{{cases.c1_after_alt}}">
+            <div class="compare-before" data-compare-before>
+              <img src="/assets/img/case-condo-before.svg" width="640" height="480" loading="lazy" alt="{{cases.c1_before_alt}}">
+            </div>
+            <span class="compare-tag compare-tag-before" aria-hidden="true">{{cases.before}}</span>
+            <span class="compare-tag compare-tag-after" aria-hidden="true">{{cases.after}}</span>
+            <span class="compare-handle" aria-hidden="true" data-compare-handle></span>
+            <label class="sr-only" for="compare-range">{{cases.compare_label}}</label>
+            <input class="compare-range" id="compare-range" type="range" min="0" max="100" value="50" data-compare-range>
+          </div>
+          <div class="case-body">
+            <p class="case-kicker">{{cases.c1_kicker}}</p>
+            <h3 id="case1-title">{{cases.c1_title}}</h3>
+            <dl class="case-facts">
+              <div><dt>{{cases.fact_space}}</dt><dd>{{cases.c1_space}}</dd></div>
+              <div><dt>{{cases.fact_scope}}</dt><dd>{{cases.c1_scope}}</dd></div>
+              <div><dt>{{cases.fact_time}}</dt><dd>{{cases.c1_time}}</dd></div>
+            </dl>
+            <div class="case-steps">
+              <div><h4>{{cases.brief}}</h4><p>{{cases.c1_brief}}</p></div>
+              <div><h4>{{cases.did}}</h4><p>{{cases.c1_did}}</p></div>
+              <div><h4>{{cases.result}}</h4><p>{{cases.c1_result}}</p></div>
+            </div>
+          </div>
+        </article>
+
+        <div class="case-grid">
+          <article class="case reveal" aria-labelledby="case2-title">
+            <div class="case-media tint-butter"><img src="/assets/img/project-kitchen.svg" width="480" height="600" loading="lazy" alt="{{work.p3_alt}}"></div>
+            <div class="case-body">
+              <p class="case-kicker">{{cases.c2_kicker}}</p>
+              <h3 id="case2-title">{{cases.c2_title}}</h3>
+              <dl class="case-facts">
+                <div><dt>{{cases.fact_space}}</dt><dd>{{cases.c2_space}}</dd></div>
+                <div><dt>{{cases.fact_scope}}</dt><dd>{{cases.c2_scope}}</dd></div>
+                <div><dt>{{cases.fact_time}}</dt><dd>{{cases.c2_time}}</dd></div>
+              </dl>
+              <div class="case-steps">
+                <div><h4>{{cases.brief}}</h4><p>{{cases.c2_brief}}</p></div>
+                <div><h4>{{cases.did}}</h4><p>{{cases.c2_did}}</p></div>
+                <div><h4>{{cases.result}}</h4><p>{{cases.c2_result}}</p></div>
+              </div>
+            </div>
+          </article>
+          <article class="case reveal" aria-labelledby="case3-title">
+            <div class="case-media tint-clay"><img src="/assets/img/project-study.svg" width="480" height="600" loading="lazy" alt="{{work.p5_alt}}"></div>
+            <div class="case-body">
+              <p class="case-kicker">{{cases.c3_kicker}}</p>
+              <h3 id="case3-title">{{cases.c3_title}}</h3>
+              <dl class="case-facts">
+                <div><dt>{{cases.fact_space}}</dt><dd>{{cases.c3_space}}</dd></div>
+                <div><dt>{{cases.fact_scope}}</dt><dd>{{cases.c3_scope}}</dd></div>
+                <div><dt>{{cases.fact_time}}</dt><dd>{{cases.c3_time}}</dd></div>
+              </dl>
+              <div class="case-steps">
+                <div><h4>{{cases.brief}}</h4><p>{{cases.c3_brief}}</p></div>
+                <div><h4>{{cases.did}}</h4><p>{{cases.c3_did}}</p></div>
+                <div><h4>{{cases.result}}</h4><p>{{cases.c3_result}}</p></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="promise reveal">
+          <h3>{{cases.promise_title}}</h3>
+          <ul>
+            <li>{{cases.promise_1}}</li>
+            <li>{{cases.promise_2}}</li>
+            <li>{{cases.promise_3}}</li>
+            <li>{{cases.promise_4}}</li>
+          </ul>
+          <a class="btn" href="#contact">{{cases.promise_cta}}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <p class="eyebrow">{{services.eyebrow}}</p>
+        <h2 id="services-title" class="section-title reveal">{{services.title}}</h2>
+        <ul class="service-grid">
+          <li class="service reveal">
+            <span class="service-icon tint-sage" aria-hidden="true">01</span>
+            <h3>{{services.s1_title}}</h3>
+            <p>{{services.s1_text}}</p>
+          </li>
+          <li class="service reveal">
+            <span class="service-icon tint-blush" aria-hidden="true">02</span>
+            <h3>{{services.s2_title}}</h3>
+            <p>{{services.s2_text}}</p>
+          </li>
+          <li class="service reveal">
+            <span class="service-icon tint-butter" aria-hidden="true">03</span>
+            <h3>{{services.s3_title}}</h3>
+            <p>{{services.s3_text}}</p>
+          </li>
+          <li class="service reveal">
+            <span class="service-icon tint-sky" aria-hidden="true">04</span>
+            <h3>{{services.s4_title}}</h3>
+            <p>{{services.s4_text}}</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section section-tinted" id="process" aria-labelledby="process-title">
+      <div class="container">
+        <p class="eyebrow">{{process.eyebrow}}</p>
+        <h2 id="process-title" class="section-title reveal">{{process.title}}</h2>
+        <ol class="process">
+          <li class="step reveal">
+            <span class="step-num" aria-hidden="true">1</span>
+            <h3>{{process.s1_title}}</h3>
+            <p>{{process.s1_text}}</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-num" aria-hidden="true">2</span>
+            <h3>{{process.s2_title}}</h3>
+            <p>{{process.s2_text}}</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-num" aria-hidden="true">3</span>
+            <h3>{{process.s3_title}}</h3>
+            <p>{{process.s3_text}}</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-num" aria-hidden="true">4</span>
+            <h3>{{process.s4_title}}</h3>
+            <p>{{process.s4_text}}</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Our story -->
+    <section class="section story" id="story" aria-labelledby="story-title">
+      <div class="container">
+        <div class="story-intro">
+          <div class="story-art reveal">
+            <img src="/assets/img/about-moodboard.svg" width="520" height="520" loading="lazy" alt="{{story.img_alt}}">
+          </div>
+          <div>
+            <p class="eyebrow">{{story.eyebrow}}</p>
+            <h2 id="story-title" class="section-title reveal">{{story.title}}</h2>
+            <p class="story-lede reveal">{{story.lede}}</p>
+          </div>
+        </div>
+
+        <ol class="chapters">
+          <li class="chapter reveal">
+            <span class="chapter-num">{{story.ch1_label}}</span>
+            <h3>{{story.ch1_title}}</h3>
+            <p>{{story.ch1_text}}</p>
+          </li>
+          <li class="chapter reveal">
+            <span class="chapter-num">{{story.ch2_label}}</span>
+            <h3>{{story.ch2_title}}</h3>
+            <p>{{story.ch2_text}}</p>
+          </li>
+          <li class="chapter reveal">
+            <span class="chapter-num">{{story.ch3_label}}</span>
+            <h3>{{story.ch3_title}}</h3>
+            <p>{{story.ch3_text}}</p>
+          </li>
+        </ol>
+
+        <blockquote class="story-quote reveal">
+          <p>{{story.quote}}</p>
+          <footer>{{story.signoff}}</footer>
+        </blockquote>
+
+        <ul class="values">
+          <li class="reveal"><strong>{{story.v1_title}}</strong> {{story.v1_text}}</li>
+          <li class="reveal"><strong>{{story.v2_title}}</strong> {{story.v2_text}}</li>
+          <li class="reveal"><strong>{{story.v3_title}}</strong> {{story.v3_text}}</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section-tinted" id="faq" aria-labelledby="faq-title">
+      <div class="container narrow">
+        <p class="eyebrow">{{faq.eyebrow}}</p>
+        <h2 id="faq-title" class="section-title reveal">{{faq.title}}</h2>
+        <div class="faq">
+          <details class="reveal">
+            <summary>{{faq.q1}}</summary>
+            <p>{{faq.a1}}</p>
+          </details>
+          <details class="reveal">
+            <summary>{{faq.q2}}</summary>
+            <p>{{faq.a2}}</p>
+          </details>
+          <details class="reveal">
+            <summary>{{faq.q3}}</summary>
+            <p>{{faq.a3}}</p>
+          </details>
+          <details class="reveal">
+            <summary>{{faq.q4}}</summary>
+            <p>{{faq.a4}}</p>
+          </details>
+          <details class="reveal">
+            <summary>{{faq.q5}}</summary>
+            <p>{{faq.a5}}</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow">{{contact.eyebrow}}</p>
+          <h2 id="contact-title" class="section-title">{{contact.title}}</h2>
+          <p>{{contact.lede}}</p>
+          <ul class="contact-list">
+            <li>
+              <span class="contact-label">{{contact.label_phone}}</span>
+              <a href="tel:+60143223601">+60&nbsp;14&#8209;322&nbsp;3601</a>
+            </li>
+            <li>
+              <span class="contact-label">Instagram</span>
+              <a href="https://www.instagram.com/imilidesignstudio/" target="_blank" rel="noopener noreferrer">@imilidesignstudio</a>
+            </li>
+            <li>
+              <span class="contact-label">{{contact.label_xhs}}</span>
+              <a href="https://xhslink.cn/m/60CBuLx36rZ" target="_blank" rel="noopener noreferrer">Imili Design Studio</a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="enquiry" data-enquiry novalidate aria-describedby="enquiry-note"
+              data-err-name="{{form.err_name}}"
+              data-err-message="{{form.err_message}}"
+              data-wa-greeting="{{form.wa_greeting}}"
+              data-wa-space="{{form.wa_space}}">
+          <div class="field">
+            <label for="f-name">{{form.name}}</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="60" required>
+          </div>
+          <div class="field">
+            <label for="f-type">{{form.type}}</label>
+            <select id="f-type" name="type">
+              <option value="{{form.type_condo}}">{{form.type_condo}}</option>
+              <option value="{{form.type_landed}}">{{form.type_landed}}</option>
+              <option value="{{form.type_room}}">{{form.type_room}}</option>
+              <option value="{{form.type_commercial}}">{{form.type_commercial}}</option>
+              <option value="{{form.type_other}}">{{form.type_other}}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-message">{{form.message}}</label>
+            <textarea id="f-message" name="message" rows="4" maxlength="500" required placeholder="{{form.placeholder}}"></textarea>
+          </div>
+          <p class="form-error" role="alert" data-form-error hidden></p>
+          <button class="btn btn-block" type="submit">{{form.submit}}</button>
+          <p class="form-note" id="enquiry-note">{{form.note}}</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="logo logo-footer" href="#top">imili<span class="logo-dot">.</span></a>
+      <p class="footer-tag">{{footer.tag}}</p>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/imilidesignstudio/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://xhslink.cn/m/60CBuLx36rZ" target="_blank" rel="noopener noreferrer">小红书</a></li>
+        <li><a href="https://wa.me/60143223601" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+      </ul>
+      <p class="footer-copy">© <span data-year>2026</span> Imili Design Studio</p>
+    </div>
+  </footer>
+
+  <a class="wa-float" href="https://wa.me/60143223601" target="_blank" rel="noopener noreferrer" aria-label="{{a11y.whatsapp}}">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+  </a>
+</body>
+</html>
