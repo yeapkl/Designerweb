@@ -1,0 +1,192 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_LOCAL: imili-web:ci
+
+jobs:
+  test:
+    name: QA, security tests & image scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install test tooling
+        run: npm ci
+
+      - name: Validate HTML
+        run: npm run lint:html
+
+      - name: Audit test dependencies
+        run: npm audit --audit-level=high
+
+      - name: Build image
+        run: docker build -t "$IMAGE_LOCAL" .
+
+      - name: Start site
+        run: |
+          docker run -d --name site -p 8080:8080 "$IMAGE_LOCAL"
+          for i in $(seq 1 20); do curl -sf http://localhost:8080/healthz && exit 0; sleep 1; done
+          docker logs site; exit 1
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: QA + security test suite
+        run: npm test
+        env:
+          BASE_URL: http://localhost:8080
+
+      # Fails the pipeline on any HIGH/CRITICAL OS vulnerability that has a
+      # fix available, so nothing known-and-fixable ever reaches Cloud Run.
+      - name: Scan image for vulnerabilities (Trivy)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: ${{ env.IMAGE_LOCAL }}
+          scanners: vuln,secret
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+      - name: Scan repo config (Trivy misconfig)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: config
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: "1"
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+  docker-publish:
+    name: Build & push Docker image
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute image tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # GHCR requires a lowercase repository name.
+          images: ghcr.io/yeapkl/designerweb
+          tags: |
+            type=sha,format=long
+            type=raw,value=latest
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-cloud-run:
+    name: Deploy to Cloud Run
+    needs: docker-publish
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # required for Workload Identity Federation
+    environment:
+      name: gcp-production
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # No long-lived GCP key is stored in GitHub: GitHub's OIDC token is
+      # exchanged for short-lived GCP credentials. One-time setup is in
+      # docs/deploy/gcp-cloud-run-setup.md.
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v3
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          # Singapore: the closest Cloud Run region to Malaysian visitors.
+          region: asia-southeast1
+          service: imili-design-studio
+          # The exact image docker-publish just pushed, not a mutable tag.
+          image: ghcr.io/yeapkl/designerweb:sha-${{ github.sha }}
+          # A static site needs no secrets and no GCP permissions, so it runs
+          # as its own zero-role service account. Small limits keep the free
+          # tier safe from runaway scaling.
+          flags: >-
+            --allow-unauthenticated
+            --port=8080
+            --service-account=${{ vars.GCP_RUNTIME_SERVICE_ACCOUNT }}
+            --cpu=1 --memory=256Mi
+            --min-instances=0 --max-instances=3
+            --concurrency=200
+
+      - name: Smoke test the deployment
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          curl -sf "$URL/healthz" | grep -q ok
+          curl -sfI "$URL/" | tee /dev/stderr | grep -qi "content-security-policy"
+
+      # Re-run the security suite against the live HTTPS deployment, so
+      # headers/TLS are verified where visitors actually hit them.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Post-deploy security checks
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test tests/security.spec.js --project=desktop
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.url }}

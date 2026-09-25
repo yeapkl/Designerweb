@@ -1,0 +1,10 @@
+.git/
+.github/
+.claude/
+node_modules/
+tests/
+test-results/
+playwright-report/
+docs/
+*.md
+.env*
