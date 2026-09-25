@@ -27,6 +27,9 @@ account**. The API project's setup is left untouched.
 
 ## 1. Run this once (Cloud Shell or any machine with `gcloud`)
 
+Easiest: open Cloud Shell and run the ready-made, re-runnable script
+[`scripts/gcp-setup.sh`](../../scripts/gcp-setup.sh). The commands below are what it does.
+
 ```bash
 export PROJECT_ID="ai-deployment-509116"
 export REPO="yeapkl/Designerweb"            # exact case as GitHub reports it
