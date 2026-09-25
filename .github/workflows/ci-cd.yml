@@ -43,7 +43,7 @@ jobs:
       - name: Start site
         run: |
           docker run -d --name site -p 8080:8080 "$IMAGE_LOCAL"
-          for i in $(seq 1 20); do curl -sf http://localhost:8080/healthz && break; sleep 1; done
+          for i in $(seq 1 20); do curl -sf http://localhost:8080/health && break; sleep 1; done
           # Fail fast if any page or asset directory is unreadable (e.g. 403).
           for p in / /ms/ /zh/ /assets/js/main.js /assets/css/style.css /assets/img/favicon.svg; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:8080$p")
@@ -205,10 +205,11 @@ jobs:
       - name: Smoke test the deployment
         run: |
           URL="${{ steps.deploy.outputs.url }}"
-          curl -sf "$URL/healthz" | grep -q ok
-          curl -sfI "$URL/" | tee /dev/stderr | grep -qi "content-security-policy"
-          curl -sf "$URL/ms/" | grep -q 'lang="ms"'
-          curl -sf "$URL/zh/" | grep -q 'lang="zh-Hans"'
+          set -x  # show exactly which check fails
+          curl -fsS "$URL/health" | grep -q ok
+          curl -fsSI "$URL/" | tee /dev/stderr | grep -qi "content-security-policy"
+          curl -fsS "$URL/ms/" | grep -q 'lang="ms"'
+          curl -fsS "$URL/zh/" | grep -q 'lang="zh-Hans"'
 
       # Re-run the security suite against the live HTTPS deployment, so
       # headers/TLS are verified where visitors actually hit them.

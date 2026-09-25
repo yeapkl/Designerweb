@@ -42,7 +42,7 @@ const REQUIRED_HEADERS = {
 };
 
 test.describe("Security headers", () => {
-  for (const path of ["/", "/ms/", "/zh/", "/assets/css/style.css", "/assets/js/main.js", "/assets/img/hero-living.svg", "/does-not-exist", "/healthz"]) {
+  for (const path of ["/", "/ms/", "/zh/", "/assets/css/style.css", "/assets/js/main.js", "/assets/img/hero-living.svg", "/does-not-exist", "/health"]) {
     test(`SEC-1 hardened headers on ${path}`, async () => {
       const res = await raw("GET", path);
       for (const [name, pattern] of Object.entries(REQUIRED_HEADERS)) {

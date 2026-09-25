@@ -126,7 +126,7 @@ Merge to `main`. The pipeline runs:
 2. **docker-publish**: pushes `ghcr.io/yeapkl/designerweb:sha-<commit>`.
 3. **deploy-cloud-run**: authenticates via WIF, deploys that exact image
    to `imili-design-studio` (0–3 instances, 256 MiB), smoke-tests
-   `/healthz`, then re-runs the security suite against the live HTTPS URL.
+   `/health`, then re-runs the security suite against the live HTTPS URL.
 
 The URL appears in the job output and under the repo's **Environments →
 gcp-production** tab.
