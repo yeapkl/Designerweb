@@ -9,7 +9,9 @@ ARG SITE_URL=""
 COPY scripts ./scripts
 COPY src ./src
 COPY site ./site
-RUN SITE_URL="$SITE_URL" node scripts/build.mjs
+RUN SITE_URL="$SITE_URL" node scripts/build.mjs \
+    && find dist -type d -exec chmod 755 {} + \
+    && find dist -type f -exec chmod 644 {} +
 
 # ---- Runtime stage: static files served by nginx, non-root, port 8080 ----
 FROM nginxinc/nginx-unprivileged:1.30-alpine
@@ -23,7 +25,10 @@ RUN apk upgrade --no-cache \
     && mkdir -p /etc/nginx/snippets
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY nginx/security-headers.conf /etc/nginx/snippets/security-headers.conf
-COPY --from=build --chown=root:root --chmod=a=rX /app/dist/ /usr/share/nginx/html/
+# Root-owned, world-readable, not writable by the nginx user (uid 101).
+# Modes are set explicitly in the build stage (a symbolic --chmod=a=rX here
+# left directories untraversable on GitHub's BuildKit -> 403 on /ms/).
+COPY --from=build --chown=root:root /app/dist/ /usr/share/nginx/html/
 USER 101
 
 EXPOSE 8080

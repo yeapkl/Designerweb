@@ -43,8 +43,12 @@ jobs:
       - name: Start site
         run: |
           docker run -d --name site -p 8080:8080 "$IMAGE_LOCAL"
-          for i in $(seq 1 20); do curl -sf http://localhost:8080/healthz && exit 0; sleep 1; done
-          docker logs site; exit 1
+          for i in $(seq 1 20); do curl -sf http://localhost:8080/healthz && break; sleep 1; done
+          # Fail fast if any page or asset directory is unreadable (e.g. 403).
+          for p in / /ms/ /zh/ /assets/js/main.js /assets/css/style.css /assets/img/favicon.svg; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:8080$p")
+            echo "$p -> $code"; [ "$code" = 200 ] || { docker logs site; exit 1; }
+          done
 
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
