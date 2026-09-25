@@ -57,7 +57,7 @@ jobs:
       # Fails the pipeline on any HIGH/CRITICAL OS vulnerability that has a
       # fix available, so nothing known-and-fixable ever reaches Cloud Run.
       - name: Scan image for vulnerabilities (Trivy)
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.IMAGE_LOCAL }}
           scanners: vuln,secret
@@ -66,7 +66,7 @@ jobs:
           exit-code: "1"
 
       - name: Scan repo config (Trivy misconfig)
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: config
           scan-ref: .
