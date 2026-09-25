@@ -73,7 +73,29 @@ echo "GCP_RUNTIME_SERVICE_ACCOUNT=${RUNTIME_SA}@${PROJECT_ID}.iam.gserviceaccoun
 The deployer already has `roles/run.admin` from the API setup, and the
 required APIs (`run`, `iamcredentials`, `sts`) are already enabled.
 
-## 2. Make the image pullable
+## 1b. Artifact Registry for the site image
+
+Cloud Run could not pull the image straight from `ghcr.io` ("Cloud Run does
+not have permission to pull the image `cache.asia-docker.pkg.dev/ghcr.io/…`"),
+so the deploy job copies the tested image into an Artifact Registry repo in
+the project and deploys from there. One-time:
+
+```bash
+PROJECT_ID="ai-deployment-509116"
+gcloud services enable artifactregistry.googleapis.com --project "$PROJECT_ID"
+gcloud artifacts repositories create designerweb \
+  --repository-format=docker --location=asia-southeast1 \
+  --description="Imili Design Studio website images" --project "$PROJECT_ID"
+gcloud artifacts repositories add-iam-policy-binding designerweb \
+  --location=asia-southeast1 --project "$PROJECT_ID" \
+  --member="serviceAccount:github-actions-deployer@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/artifactregistry.writer"
+```
+
+The deployer may only push to this one repo. Cloud Run reads same-project
+Artifact Registry by default, so the runtime SA still needs no roles.
+
+## 2. GHCR image visibility (optional now)
 
 This repo is private, so its GHCR package starts private too, and Cloud
 Run can't pull a private GHCR image. After the **first** push to `main`
